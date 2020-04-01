@@ -13,11 +13,23 @@ window.onload = async function () {
 
         var creation_date = format_date()
         console.log("Serial: " + serial + " Date:" + creation_date + "Part Type: " + part_type)
-
+        let account = window.accounts[0]
+        let serial_fromAscii = web3.utils.fromAscii(serial)
+        let part_type_fromAscii = web3.utils.fromAscii(part_type)
+        let creation_date_fromAscii = web3.utils.fromAscii(creation_date)
+        
+        console.log(
+            account,serial_fromAscii,
+            part_type_fromAscii,
+            creation_date_fromAscii
+        )
+        
         //Create part hash and send information to blockchain
-        var part_sha = web3.utils.soliditySha3(window.accounts[0], web3.utils.fromAscii(serial),
-            web3.utils.fromAscii(part_type), web3.utils.fromAscii(creation_date))
-
+        // var part_sha = web3.utils.soliditySha3(window.accounts[0], web3.utils.fromAscii(serial),
+        //     web3.utils.fromAscii(part_type), web3.utils.fromAscii(creation_date))
+        var part_sha = web3.utils.soliditySha3(account, serial_fromAscii,
+            part_type_fromAscii, creation_date_fromAscii)
+        
         window.pm.methods.buildPart(serial, part_type, creation_date).send({ from: window.accounts[0], gas: 1000000 }, function (error, result) {
             console.log("Smart Contract Transaction sent")
             console.log(result)

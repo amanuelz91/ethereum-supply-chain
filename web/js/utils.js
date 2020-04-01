@@ -188,18 +188,46 @@ function getMultipleActivePart() {
 
 async function init_web3() {
     //Web3 init
-    if (typeof web3 != 'undefined') {
-        web3 = new Web3(web3.currentProvider) // what Metamask injected 
-    } else {
-        // Instantiate and set Ganache as your provider
-        web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+    // if (typeof web3 != 'undefined') {
+    //     web3 = new Web3(web3.currentProvider) // what Metamask injected 
+    // } else {
+    //     // Instantiate and set Ganache as your provider
+    //     web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:9545"));
+    // }
+
+
+    /**  Code from https://medium.com/metamask/https-medium-com-metamask-breaking-change-injecting-web3-7722797916a8  **/
+    if (window.ethereum) {
+        // we should console.log here
+        console.log('window.ethereum exists')
+        window.web3 = new Web3(ethereum);
+        try {
+            // Request account access if needed
+            await ethereum.enable();
+            console.log('ethereum enabled')
+            // Acccounts now exposed
+            // web3.eth.sendTransaction({/* ... */});
+        } catch (error) {
+            // User denied account access...
+        }
     }
+    else if (window.web3) {
+        console.log('window.web3 exists')
+        window.web3 = new Web3(web3.currentProvider);
+        // Acccounts always exposed
+        // web3.eth.sendTransaction({/* ... */});
+    }
+    // Non-dapp browsers...
+    else {
+        console.log('Non-Ethereum browser detected. You should consider trying MetaMask!');
+    }
+
     //Load accounts
-    window.accounts = await web3.eth.getAccounts()
-    console.log("Loaded accounts")
+    window.accounts = await window.web3.eth.getAccounts()
+    console.log("Loaded accounts", window.accounts)
 
     // The interface definition for your smart contract (the ABI) 
-    window.pm = new web3.eth.Contract([
+    window.pm = new window.web3.eth.Contract([
         {
             "constant": true,
             "inputs": [
@@ -353,9 +381,9 @@ async function init_web3() {
         }
     ])
 
-    window.pm.options.address = '0xE5987169978243A040fba66245E982D884108A70'
+    window.pm.options.address = '0x697739b6608a825EFB9B3fa6A13db8aF1D8370CA'
 
-    window.co = new web3.eth.Contract([
+    window.co = new window.web3.eth.Contract([
         {
             "constant": true,
             "inputs": [
@@ -497,7 +525,7 @@ async function init_web3() {
             "signature": "0xac814490"
         }
     ])
-    window.co.options.address = "0x5F064EDfd972D3Cd9A129b8DFE96Ea7fEe5Dd000"
+    window.co.options.address = "0x0CFD917649A7BFB808610eB9Da6ABA5953B7870d"
 }
 
 async function getOwnerHistoryFromEvents(event, p_hash) {

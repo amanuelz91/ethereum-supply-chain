@@ -1,0 +1,25 @@
+{
+  "name": "ethereum-supply-chain",
+  "version": "1.0.0",
+  "description": "This project is a simple supply chain application that records transactions on ethereum. It intends to be very simple and generic, and we base the main example on car manufacturing. The functionality is provided by two Smart Contracts:",
+  "main": "truffle-config.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/daitan-innovation/ethereum-supply-chain.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/daitan-innovation/ethereum-supply-chain/issues"
+  },
+  "homepage": "https://github.com/daitan-innovation/ethereum-supply-chain#readme",
+  "dependencies": {
+    "http-server": "^0.12.1"
+  }
+}

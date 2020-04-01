@@ -36,10 +36,12 @@ window.onload = async function () {
             //Then the parts that will be present on the car
             var part_list = getMultipleActivePart()
             var part_array = []
+            console.log('part list',part_list)
             for (var i = 0; i < part_list.length; i++) {
+                // part_array.push(web3.utils.fromAscii(part_list[i].textContent))
                 part_array.push(part_list[i].textContent)
             }
-
+            console.log('part array after bytes ',part_array)
             // //Fill part array with dummy elements for the unprovided parts
             // while(part_array.length < 6){
             //     part_array.push("0x0")
@@ -53,7 +55,7 @@ window.onload = async function () {
             //Finally, build the car
             window.pm.methods.buildProduct(serial, "Car", creation_date, part_array).send({ from: window.accounts[0], gas: 2000000 }, function (error, result) {
                 if (error) {
-                    console.log(error)
+                    console.log('error!',error)
                 } else {
                     console.log("Car created")
                     //Add hash to car owned list
