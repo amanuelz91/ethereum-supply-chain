@@ -1,3 +1,4 @@
+Adaptation of https://github.com/daitan-innovation/ethereum-supply-chain
 # Ethereum Supply Chain Demo
 
 This project is a simple supply chain application that records transactions on ethereum.
